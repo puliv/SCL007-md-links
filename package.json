@@ -1,4 +1,28 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "## Preámbulo",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puliv/SCL007-md-links.git"
+  },
+  "author": "Paulina Vera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puliv/SCL007-md-links/issues"
+  },
+  "homepage": "https://github.com/puliv/SCL007-md-links#readme",
+  "dependencies": {
+    "markdown-it": "^8.4.2",
+    "markdown-link-extractor": "^1.2.0",
+    "node": "^11.10.0",
+    "node-fetch": "^2.3.0"
+  }
 }
