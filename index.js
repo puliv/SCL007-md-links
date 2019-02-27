@@ -2,26 +2,9 @@
 //   // ...
 // };
 
-
-/*Use readFile para leer README.md y me mostro su contenido, por que use el parametro 
-utf-8 para que use ese codigo al mostrarlo*/
-
-// const path = require("path");
-
-// const basenamePath= path.basename("README.md")
-// 	console.log(basenamePath)
-
-// const extensionPath = path.extname("README.md")
-//     console.log(extensionPath)
-
-// const readline = require("readline");
-
-
 const fs = require("fs");
 const anyDocument = process.argv[2];
 const fetch = require("node-fetch");
-let dataLinks = []; 
-
 
 const mdLinks = () => {
 	//Modulo que captura los links 
@@ -32,15 +15,33 @@ const mdLinks = () => {
 			console.log(err)
 		} else {
 			const links = markdownLinkExtractor(data);
-				console.log(links);
-				dataLinks.push(links); //Aqui guardo el resultado para usarlo con fetch
+			// console.log(links);
+
+			for (let i = 0; i < links.length; i++) {
+				const linksExtracted = links[i];
+				
+				fetch(links[i]).then(res => {
+					const objectLinks = {
+						url: res.url,
+						statusLinks: res.status,
+						statusText: res.statusText
+					};
+					console.log(objectLinks);
+					return objectLinks;
+				})
+				.catch(error => {
+					const objectErr = {
+						urlErr: linksExtracted,
+						statusErr: error
+					}
+					console.log(objectErr)
+					return objectErr;
+				});
+			}
 		}
 	});
 };
 
-// mdLinks();
+mdLinks();
 
-fetch("README.md").then((res) => {	
-	console.log(res)
-}); 
 
