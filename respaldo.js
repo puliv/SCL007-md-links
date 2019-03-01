@@ -2,10 +2,6 @@
 //   // ...
 // };
 
-// module.exports = () => {
-//   // ...
-// };
-
 const fs = require("fs");
 const path = process.argv[2];
 const fetch = require("node-fetch");
@@ -14,12 +10,13 @@ const markdownLinkExtractor = require('markdown-link-extractor'); //Modulo que c
 
 const mdLinks = (path, option) => {
 
-	const stat = fs.statSync(path);
-	const absolutePath = pathModule.resolve(path); 
-	const fileExtension = pathModule.extname(path); 
+	const absolutePath = pathModule.resolve(path); //Var que guarda la ruta absoluta del archivo ingresado
+	const fileExtension = pathModule.extname(path); //Var que identifica extension del archivo ingresado
 
-
-	if (fileExtension === ".md") {
+	//Condicion para que solo acepte archivos .md 
+	if (fileExtension != ".md") {
+		console.log("Solo se permiten archivos con extensión .md")
+	} else {
 		fs.readFile(path, "utf-8", (err, data) => {
 			if (err) {
 				console.log(err)
@@ -57,14 +54,6 @@ const mdLinks = (path, option) => {
 					.then((res) => console.log(res));
 			}
 		});
-	} else if (stat.isDirectory() === true) {
-		let recursive = fs.readdirSync(path);
-		return (Promise.all(recursive.map(elemento => {
-			let otherVar = pathModule.join(absolutePath, elemento);
-			return mdLinks(otherVar);
-		})))
-	} else {
-		console.log("Errorrrrrrrrrrrr")
 	}
 };
 
